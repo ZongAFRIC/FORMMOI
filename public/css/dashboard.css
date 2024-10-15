@@ -1,0 +1,61 @@
+.bi {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
+
+/*
+ * Sidebar
+ */
+
+@media (min-width: 768px) {
+  .sidebar .offcanvas-lg {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 48px;
+  }
+  .navbar-search {
+    display: block;
+  }
+}
+
+.sidebar .nav-link {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.sidebar .nav-link:hover {
+  background-color: lightskyblue;
+}
+
+/* .sidebar .nav-link.active {
+  color: green;
+  background-color: green;
+  border-left: .5em solid green;
+} */
+
+.sidebar-heading {
+  font-size: .75rem;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-left: 1rem;
+  color: white;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+}
+
+nav{
+  background-color: red;
+}
+
+#titre{
+  color: white;
+}
