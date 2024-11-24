@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Categorie;
+use App\Models\Formation;
 
 class CategorieController extends Controller
 {
@@ -28,26 +29,56 @@ class CategorieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
-        // Categorie::create($request->all());
-        $request->validate([
-            'nom_categorie' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    //     // Categorie::create($request->all());
+    //     $request->validate([
+    //         'nom_categorie' => 'required|string|max:255',
+    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+    //     ]);
+    
+    //     $categorie = new Categorie();
+    //     $categorie->nom_categorie = $request->nom_categorie;
+    
+    //     if ($request->hasFile('image')) {
+    //         // Stocke l'image dans storage/app/public/categories
+    //         $path = $request->file('image')->store('categories', 'public');
+    //         $categorie->image = $path;
+    //     }
+    
+    //     $categorie->save();
+    //     return redirect()->route('gestion.categorie')->with('success', 'Categorie ajouté avec succès.');
+    
+    
+
+    $request->validate([
+        'nom_categorie' => 'required|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+    ]);
+    
+    
+    $image = $request->image;
+    if($image != null && !$image->getError()){
+
+        $file = $request->file('image');
+        $filename = $file->getClientOriginalName();
+        $imagePath = $file->storeAs('categories/image', $filename,'public');
+        $categorie=Categorie::create([
+            'nom_categorie' => $request->nom_categorie,
+            'image'=> $imagePath,
         ]);
-    
-        $categorie = new Categorie();
-        $categorie->nom_categorie = $request->nom_categorie;
-    
-        if ($request->hasFile('image')) {
-            // Stocke l'image dans storage/app/public/categories
-            $path = $request->file('image')->store('categories', 'public');
-            $categorie->image = $path;
-        }
-    
-        $categorie->save();
-        return redirect()->route('gestion.categorie')->with('success', 'Categorie ajouté avec succès.');
     }
+    else{
+        $categorie=Categorie::create([
+            'nom_categorie' => $request->nom_categorie,
+        ]);
+    }
+    
+    return redirect()->route('gestion.categorie')->with('success', 'Categorie ajouté avec succès.');
+    
+    }
+
+    
 
     /**
      * Display the specified resource.
@@ -74,7 +105,7 @@ class CategorieController extends Controller
     {
         $request->validate([
             'nom_categorie' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
     
         $categorie = Categorie::findOrFail($id);
@@ -93,7 +124,7 @@ class CategorieController extends Controller
     
         $categorie->save();
     
-        return redirect()->route('categorie.index')->with('success', 'Catégorie mise à jour avec succès.');
+        return redirect()->route('gestion.categorie')->with('success', 'Catégorie mise à jour avec succès.');
     }
 
     /**
@@ -110,4 +141,20 @@ class CategorieController extends Controller
     {
         return redirect()->route('gestion.categorie');
     }
+
+    public function listCategorie()
+    {
+        $categorie = Categorie::withCount('formations')->get();
+
+        return view('categorie.list',compact('categorie'));
+    }
+
+    public function formationsParCategorie($nom_categorie)
+    {
+        $categorie = Categorie::where('nom_categorie', $nom_categorie)->with('formations')->firstOrFail();
+        $formationsCount = Categorie::withCount('formations')->get();
+        return view('formation.parCategorie', compact('categorie','formationsCount'));
+    }
+
+
 }

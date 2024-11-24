@@ -24,12 +24,14 @@
 
 <body class="bg-gradient-primary">
 
-    <div class="d-flex">
-        <ul>
-           <li style="color: white">Je suis un etudiant</li>
-           <li> <a href="#formateur" style="color: white">Je suis un formateur</a></li>
+    <div class="d-flex justify-content-center">
+        <ul class="list-inline">
+            <li class="list-inline-item me-6 " style="color: white">Je suis étudiant</li>
+            <li class="list-inline-item ml-4 fs-3">
+                <a href="#formateur" style="color: white">Je suis formateur</a>
+            </li>
         </ul>
-   </div>
+    </div>
 
     <div class="container">
 
@@ -58,7 +60,7 @@
                                     <input type="password" class="form-control form-control-user" placeholder="Mot de passe" name="password" required autocomplete="new-password">
                                 </div>
 
-                                <button class="btn btn-primary btn-user btn-block">Connexion</button>
+                                <button class="btn btn-primary btn-user btn-block fs-4">Connexion</button>
                             </form>
                             <hr>
                             <div class="text-center">
@@ -87,6 +89,15 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Je suis un formateur</h1>
                             </div>
+                            
+                                @if(session('error'))
+                                    <div class="alert alert-danger card text-center">
+                                        {{ session('error') }}
+                                        Veuillez patienter!
+                                    </div>
+                                @endif
+                            
+
                             <form class="user" action="{{ route('loginFormateur')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
 
@@ -101,7 +112,7 @@
                                     <label for="password"> Mot de passe </label>
                                     <input type="password" class="form-control form-control-user" placeholder="Mot de passe" name="password" required autocomplete="new-password">
                                 </div>
-                                <button class="btn btn-primary btn-user btn-block">Connexion</button>
+                                <button class="btn btn-primary btn-user btn-block fs-4">Connexion</button>
                             </form>
                             <hr>
                             <div class="text-center">
@@ -109,7 +120,7 @@
                             </div>
                             <hr>
                             <div class="text-center">
-                                <a href="{{route('register')}}">Je n'ai pas un compte ? M'inscrire !</a>
+                                <a href="{{route('register')}}#formateur">Je n'ai pas un compte ? M'inscrire !</a>
                             </div>
                         </div>
                     </div>
@@ -120,7 +131,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>

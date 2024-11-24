@@ -109,7 +109,7 @@ class RegisterController extends Controller
         }
         
         auth()->login($etudiant);
-        return redirect()->route('etudiant.dashboard')->with('success','compte crée avec success');
+        return redirect()->route('etudiant.acceuil')->with('success','compte crée avec success');
     }else{
         return back()->withErrors([
             'password_confirmation'=> 'Les Mot de passe ne correspondent pas'
@@ -126,9 +126,9 @@ public function registerFormateur(Request $request)
         'telephone' => 'required|string|max:20',
         'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Formateur::class],
         'password' => 'required|string|min:8',
-        'image' => 'nullable|image|max:2048',
-        'cv' => 'required|file|max:2048',
-        'attestation' => 'required|file|max:2048',
+        'image' => 'nullable|image|file:png,jpg,jpeg|max:2048',
+        'cv' => 'required|file:pdf|max:2048',
+        'attestation' => 'required|file:pdf|max:2048',
         'bio' => 'nullable|string',
     ]);
 
@@ -181,7 +181,8 @@ public function registerFormateur(Request $request)
             ]);
         }
         auth()->login($formateur);
-        return redirect()->route('formateur.dashboard')->with('success','compte crée avec success');
+        // return redirect()->route('formateur.dashboard')->with('success','compte crée avec success');
+        return redirect()->route('formateur.page.attente')->with('status', 'Votre inscription est réussie. Votre compte doit être validé par un administrateur avant de pouvoir vous connecter.');
     }else{
         return back()->withErrors([
             'password_confirmation'=> 'Les Mot de passe ne correspondent pas'

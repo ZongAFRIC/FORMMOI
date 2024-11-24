@@ -3,23 +3,16 @@
 @section('content')
 <h1 class="mt-2 fs-3">Mes formations</h1>
 <ol class="breadcrumb breadcrumb-chevron bg-body-tertiary rounded-3 mt-2 mb-3">
-    <li class="breadcrumb-item "><a href="#" class="fs-5">Dashboard</a></li>
-    <li class="breadcrumb-item fs-5 ">Mes formations</li>
-    <li class="breadcrumb-item fs-5 active">Créer une formation</li>
+    <li class="breadcrumb-item "><a href=" {{ route('formateur.dashboard') }}" class="fs-5">Dashboard</a></li>
+    <li class="breadcrumb-item fs-5 active">Mes formations</li>
 
 </ol>
 <div class="card mb-1">
 
 </div>
 <div class="card mb-2 d-flex">
-    <a class=" btn btn-primary add" href="{{ route('create.formation') }}"><i class="fa-solid fa-user-plus"></i> Créer un formation</a>
+    <a class=" btn btn-primary add" href="{{ route('create.formation') }}"><i class="fa-solid fa-plus"></i> Créer une formation</a>
 </div>
-
-{{-- @if(Session::has('success'))
-      <div class="card ">
-        {{ Session::get('success') }}
-      </div>
-@endif --}}
 
 
 {{-- <div class="container"> --}}
@@ -27,18 +20,18 @@
        
         <div class="card mb-4">
             <div class="card-header">
-                <i class="fas fa-table me-1"></i> Liste personnel
+                <i class="fas fa-table me-1"></i> Liste de mes formations
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Matricule</th>
-                            <th>Nom</th>
-                            <th>Prenom</th>
-                            <th>Service</th>
-                            <th>Numero</th>
-                            <th>Email</th>
+                            <th>ID</th>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Durée</th>
+                            <th>Nombre chapitre</th>
+                            {{-- <th>Email</th> --}}
                             <th>Actions</th>
                         </tr>
                     </thead>

@@ -13,11 +13,6 @@ return new class extends Migration
     {
         Schema::create('avis', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('etudiant_id')->constrained()->onDelete('cascade');
-            // $table->foreignId('formation_id')->constrained()->onDelete('cascade');
-            // $table->tinyInteger('note')->unsigned()->nullable(); // Note de 1 à 5
-            // $table->text('commentaire')->nullable(); //
-            // Clé étrangère pour 'etudiant_id' pointant sur la table 'etudiants'
             $table->unsignedBigInteger('etudiant_id');
             $table->foreign('etudiant_id')->references('id')->on('etudiants')->onDelete('cascade');
             

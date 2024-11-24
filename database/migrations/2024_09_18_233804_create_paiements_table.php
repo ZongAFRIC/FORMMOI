@@ -17,10 +17,14 @@ return new class extends Migration
             $table->date('date');
             $table->string('methode');
             $table->enum('status', ['validé', 'annulé']);
-            $table->foreignId('commande_id')->constrained('commandes');
-            $table->foreignId('formation_id')->constrained('formations');
-            $table->foreignId('etudiant_id')->constrained('etudiants');
+            $table->unsignedBigInteger('formation_id')->nullable(); // Permet NULL
+            $table->unsignedBigInteger('commande_id')->nullable();  // Permet NULL
+            $table->unsignedBigInteger('etudiant_id');
             $table->timestamps();
+
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
+            $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade');
+            $table->foreign('etudiant_id')->references('id')->on('etudiants')->onDelete('cascade');
         });
     }
 

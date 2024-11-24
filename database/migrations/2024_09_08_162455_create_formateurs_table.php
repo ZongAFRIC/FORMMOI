@@ -24,8 +24,9 @@ return new class extends Migration
             $table->string('attestation')->nullable();
             $table->string('bio')->nullable();
             $table->boolean('is_validated')->default(false);
-            $table->enum('status', ['active', 'desactive'])->default('active');
+            $table->enum('status', ['active', 'desactive'])->default('desactive');
             $table->timestamps();
+            $table->rememberToken();
         });
     }
 

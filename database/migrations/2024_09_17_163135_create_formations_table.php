@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->text('description');
-            $table->double('prix');
+            $table->integer('prix');
             $table->string('categorie');
-            $table->string('video');
+            $table->string('video')->nullable();
             $table->string('pdf')->nullable();
             $table->string('image')->nullable();
-            $table->string('duree')->nullable();
+            $table->integer('duree');
             $table->foreignId('formateur_id')->constrained('formateurs')->onDelete('cascade');
             // $table->foreignId('categorie_id')->constrained('categories')->onDelete('cascade');
             // $table->foreignId('formateur_id')->constrained('formateurs')->onDelete('cascade');

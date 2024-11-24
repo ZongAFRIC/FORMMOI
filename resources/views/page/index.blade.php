@@ -25,11 +25,11 @@
         <link href=" {{ asset('css/breadcrumbs.css') }}" rel="stylesheet">
         <link href=" {{ asset('css/styles.css') }}" rel="stylesheet">
 
-        <link href=" {{ asset('admin/css/sb-admin-2.css') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/js/sb-admin-2.js') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/vendor/bootstrap/js/bootstrap.js') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/vendor/bootstrap/js/bootstrap.min.js') }}" rel="stylesheet">
+        <link href=" {{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+        <link href=" {{ asset('js/sb-admin-2.js') }}" rel="stylesheet">
+        <link href=" {{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" rel="stylesheet">
+        <link href=" {{ asset('vendor/bootstrap/js/bootstrap.js') }}" rel="stylesheet">
+        <link href=" {{ asset('vendor/bootstrap/js/bootstrap.min.js') }}" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -37,16 +37,16 @@
     <title>educa index</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
 
      <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -90,8 +90,14 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    <div class="card align-items-center mb-6">
+                       <h3 class="align-items-center">  Bienvenue sur e-education !</h3>
+                        
+                       <p> Ceci est une plateforme oeuvrant dans la formation en ligne.</p>
+                    </div>
+
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-6">
                         <h1 class="h3 mb-0 text-gray-800">Formations</h1>
                         
                     </div>
@@ -105,7 +111,7 @@
                                     <div class="col mr-2">
                                         <a class="text-xs font-weight-bold text-primary text-uppercase mb-1" href="#">
                                             Formations 1</a>
-                                       <a href="#"><img src="../img/IA.png" class="img-fluid card" alt="IA Image"></a> 
+                                       <a href="#"><img src="{{asset('img/D.png')}}" class="img-fluid card" alt="IA Image"></a> 
                                         <table class="mt-3">
                                             <tr>
                                                 <td><strong>Description :</strong></td>

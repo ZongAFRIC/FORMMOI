@@ -10,12 +10,11 @@
     <meta name="author" content="">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
-        <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        {{-- <link rel="icon" type="image/png" href=" {{ asset('img/uts1.png')}}"> --}}
-        <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="preconnect" href="https://fonts.bunny.net">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
         <!-- Custom styles for this template -->
@@ -23,29 +22,35 @@
         <link href=" {{ asset('css/dashboard.css') }}" rel="stylesheet">
         <link href=" {{ asset('css/styles.css') }}" rel="stylesheet">
         <link href=" {{ asset('css/breadcrumbs.css') }}" rel="stylesheet">
-        <link href=" {{ asset('css/styles.css') }}" rel="stylesheet">
 
-        <link href=" {{ asset('admin/css/sb-admin-2.css') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/js/sb-admin-2.js') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/vendor/bootstrap/js/bootstrap.js') }}" rel="stylesheet">
-        <link href=" {{ asset('admin/vendor/bootstrap/js/bootstrap.min.js') }}" rel="stylesheet">
+        <link href=" {{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+        <link href=" {{ asset('js/sb-admin-2.js') }}" rel="stylesheet">
+        <link href=" {{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}" rel="stylesheet">
+        <link href=" {{ asset('vendor/bootstrap/js/bootstrap.js') }}" rel="stylesheet">
+        <link href=" {{ asset('vendor/bootstrap/js/bootstrap.min.js') }}" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css')}}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css')}}">
+
 
 </head>
 
-<body>
+<body class="fs-4">
 
     <!-- Page Wrapper -->
     <div id="wrapper" class="sb-nav-fixed">
@@ -54,7 +59,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -66,7 +71,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href=" {{ route('adminDashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -74,19 +79,24 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('admin-gestFormateurs')}}">
-                    <i class="fas fa-fw fa-users"></i>
-                    <span>Gerer Formateurs</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Gestion Formateurs</span>
                 </a>
-            
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item mt-4" href="{{ route('admin.gestFormateurs') }}">Activés</a>
+                        <a class="collapse-item" href="{{ route('admin.gestFormateurAttente') }}">En attente...</a>
+                    </div>
+                </div>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#">
                     <i class="fas fa-fw fa-users"></i>
-                    <span>Gerer etudiants</span>
+                    <span>Gestion etudiants</span>
                 </a>
             </li>
 
@@ -99,17 +109,10 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#">
-                    <i class="fas fa-fw fa-users"></i>
+                    <i class="fas fa-envelope fa-fw"></i>
                     <span>Messagerie</span>
                 </a>
             </li>
-
-            {{-- <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <i class="fas fa-fw fa-dollar-sign"></i>
-                    <span>Mon porte-monnaie</span>
-                </a>
-            </li> --}}
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -120,6 +123,7 @@
             </div>
 
         </ul>
+        
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -260,19 +264,11 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            {{-- <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="font-medium text-base text-gray-800">{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</div>
-                                <div class="font-medium text-base text-gray-800">
-                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a> --}}
-
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <div class="font-medium text-base text-gray-800">{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</div>
+                                <div class="font-medium text-base text-gray-800 me-2">{{ Auth::user()->nom }} {{ Auth::user()->prenom }}</div>
                                 <div class="font-medium text-base text-gray-800">
                                     <img class="img-profile rounded-circle"
-                                         src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('img/default_profile.svg') }}">
+                                         src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('img/user-removebg-preview.png') }}">
                                 </div>
                             </a>
                             
@@ -281,16 +277,9 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Profil
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+                                
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -308,7 +297,7 @@
                 <div class="container-fluid">
 
                     <main>
-                        <div class="container-fluid px-4">
+                        <div class="container-fluid">
                             @yield('content')
                         </div>
                     </main>
@@ -319,7 +308,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2024</span>
+                        <span>Copyright &copy; 2024</span>
                     </div>
                 </div>
             </footer>
@@ -357,20 +346,28 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-        <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('assets/demo/chart-bar-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/datatables-simple-demo.js') }}"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script> --}}
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+
+    <script src="{{ asset('plugins/jquery/jquery.min.js')}}"></script>
+        <!-- Bootstrap 4 -->
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+        <!-- AdminLTE App -->
+    <script src="{{ asset('dist/js/adminlte.min.js')}}"></script>
+
 
 </body>
 

@@ -13,10 +13,10 @@ class EtudiantMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    protected $guards = ['etudiants'];
+    protected $guards = ['etudiant'];
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth('etudiants')->check()) {
+        if (!auth('etudiant')->check()) {
             return redirect('/login');
         }
         // if (!agent()->can('viewAny', AgentDsi::class)) {

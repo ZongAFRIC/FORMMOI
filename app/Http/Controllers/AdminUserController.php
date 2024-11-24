@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Formateur;
+use App\Models\Formation;
+use App\Models\Etudiant;
+use App\Models\Categorie;
+use App\Notifications\FormateurValidated;
+
 
 class AdminUserController extends Controller
 {
@@ -20,7 +26,15 @@ class AdminUserController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        $invalidFormateurs = Formateur::where('is_validated', false)->get();
+        $invalidFormateursCount = $invalidFormateurs->count();
+        $validFormateurs = Formateur::where('is_validated', true)->get();
+        $validFormateursCount = $validFormateurs->count();
+        $formationsCount = Formation::count();
+        $etudiantsCount = Etudiant::count();
+        $categoriesCount = Categorie::count();
+
+        return view('admin.dashboard', compact('invalidFormateursCount','validFormateursCount','formationsCount','etudiantsCount','categoriesCount'));
     }
 
     /**
@@ -48,7 +62,7 @@ class AdminUserController extends Controller
         }
  
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Identifiant ou mot de passe incorrect.',
         ])->onlyInput('email');
     }
 
@@ -57,7 +71,8 @@ class AdminUserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $invalidFormateur = Formateur::where('id', $id)->where('is_validated', false)->first();
+        return view('admin.formateur.enattenteShow', compact('invalidFormateur'));
     }
 
     /**
@@ -87,6 +102,31 @@ class AdminUserController extends Controller
     
     public function gestFormateur()
     {
-        // return view('admin.dashboard');
+        $validFormateurs = Formateur::where('is_validated', true)->get();
+        return view('admin.formateur.index', compact('validFormateurs'));
+    }
+
+    public function gestFormateurAttente()
+    {
+        $invalidFormateurs = Formateur::where('is_validated', false)->get();
+        return view('admin.formateur.enattente', compact('invalidFormateurs'));
+    }
+
+    public function validerFormateur($id, Request $request)
+    {
+        // Récupère le formateur
+        $formateur = Formateur::findOrFail($id);
+        
+        // Met à jour le champ 'is_validated' en fonction de l'état de la checkbox
+        $formateur->is_validated = $request->has('is_validated');
+        $formateur->save();
+
+        //envois de la notification
+
+        if ($formateur->is_validated) {
+            $formateur->notify(new FormateurValidated());
+        }
+
+        return redirect()->route('admin.gestFormateurAttente')->with('success', 'Le formateur est validé.');
     }
 }

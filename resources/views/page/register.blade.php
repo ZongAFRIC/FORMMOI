@@ -7,9 +7,9 @@
     <meta name="description" content="Inscription">
     <meta name="author" content="Educa">
     <title>Educa - Inscription</title>
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
     <style>
         .bg-register-image {
             background-size: cover;
@@ -24,12 +24,14 @@
 
 <body class="bg-gradient-primary">
 
-    <div class="d-flex">
-        <ul>
-           <li style="color: white">Vous inscrire en tant qu'etudiant</li>
-           <li> <a href="#formateur" style="color: white">Vous inscrire en tant que formateur</a></li>
+    <div class="d-flex justify-content-center">
+        <ul class="list-inline">
+            <li class="list-inline-item me-6 " style="color: white">Vous inscrire en tant qu'étudiant</li>
+            <li class="list-inline-item ml-4 fs-4">
+                <a href="#formateur" style="color: white">Vous inscrire en tant que formateur</a>
+            </li>
         </ul>
-   </div>
+    </div>
 
     <div class="container">
 
@@ -66,7 +68,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="image">Photo</label>
-                                        <input type="file" class="form-control form-control-lg" name="image"  autofocus autocomplete="image">
+                                        <input type="file" class="form-control form-control-lg" name="image"  autofocus autocomplete="image" accept="image/*">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -117,47 +119,57 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="nom">Nom</label>
                                         <input type="text" class="form-control form-control-user" placeholder="Nom" name="nom" :value="old('nom')" required autofocus autocomplete="nom">
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="nom">Prenom</label>
                                         <input type="text" class="form-control form-control-user" placeholder="Prénom" name="prenom" :value="old('prenom')" required autofocus autocomplete="prenom">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="nom">Telephone</label>
                                         <input type="text" class="form-control form-control-user" placeholder="Téléphone" name="telephone" :value="old('telephone')" required autofocus autocomplete="telephone">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="file" class="form-control form-control-lg" name="image">
+                                        <label for="nom">Image</label>
+                                        <input type="file" class="form-control form-control-lg" name="image" accept="image/*">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="nom">Email</label>
                                     <input type="email" class="form-control form-control-user" placeholder="Adresse e-mail" name="email" required autofocus autocomplete="email">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="nom">Attestation</label>
                                         <input type="file" class="form-control form-control-lg" placeholder="Attestation" name="attestation" required autofocus autocomplete="attestation">
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="nom">Cv</label>
                                         <input type="file" class="form-control form-control-lg" placeholder="CV" name="cv" required autofocus autocomplete="cv">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label for="nom">Mot de passe</label>
                                         <input type="password" class="form-control form-control-user" placeholder="Mot de passe" name="password" required autocomplete="new-password">
                                     </div>
                                     <div class="col-sm-6">
+                                        <label for="nom">Mot de passe confirmation</label>
                                         <input type="password" class="form-control form-control-user" placeholder="Confirmer mot de passe" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
+                                <label for="nom">Biographie</label>
                                 <textarea name="bio" for="description" cols="66" rows="1" class="form-control form-control-user mb-2" :value="old('bio')" autofocus autocomplete="bio" placeholder="Bio"></textarea>
                                 <button class="btn btn-primary btn-user btn-block">M'inscrire</button>
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a href="{{route('login')}}">J'ai déjà un compte ? Me connecter !</a>
+                                <a href="{{route('login')}}#formateur">J'ai déjà un compte ? Me connecter !</a>
                             </div>
                         </div>
                     </div>
@@ -168,7 +180,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>

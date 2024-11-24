@@ -11,4 +11,8 @@ class Categorie extends Model
 
     protected $fillable = [ 'nom_categorie','image'];
 
+    public function formations() 
+    { 
+        return $this->hasMany(Formation::class, 'categorie', 'nom_categorie');
+    }
 }

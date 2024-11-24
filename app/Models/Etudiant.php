@@ -51,4 +51,10 @@ class Etudiant extends Authenticatable
     {
         return $this->hasMany(Commande::class);
     }
+
+    public function formationsAchetees()
+    {
+        return $this->belongsToMany(Formation::class, 'formation_etudiant', 'etudiant_id', 'formation_id')->withTimestamps();
+    }
+
 }

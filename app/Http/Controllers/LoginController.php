@@ -139,7 +139,7 @@ class LoginController extends Controller
         if (Auth::guard('etudiant')->attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('/etudiant/dashbord');
+            return redirect()->intended('/etudiant/acceuil');
         }
  
         return back()->withErrors([ 'error','Identifiants incorrects.',]);
@@ -155,26 +155,49 @@ class LoginController extends Controller
         ]);
 
         if (Auth::guard('formateur')->attempt($credentials)) {
-            $request->session()->regenerate();
+            // $request->session()->regenerate();
  
-            return redirect()->intended('/formateur/dashbord');
+            if (Auth::guard('formateur')->attempt($credentials)) {
+                
+                if (Auth::guard('formateur')->user()->is_validated) {
+                    $request->session()->regenerate();
+                    return redirect()->intended('/formateur/dashbord');
+                } else { 
+                    Auth::guard('formateur')->logout();
+                    return redirect()->back()->with('error', 'Votre compte doit être validé par un administrateur avant de pouvoir vous connecter.');
+                }
+            }
+            // return redirect()->intended('/formateur/dashbord');
         }
  
-        return back()->withErrors([ 'error','Les identifiants entrés sont incorrects.',]);
+        return redirect('/login#formateur')->withErrors([ 'error','Les identifiants entrés sont incorrects.',]);
 
     }
 
-    public function logout(Request $request)
+    // public function logout(Request $request)
+    // {
+    //     $userType = $request->user_type;
+
+    //     if ($userType === 'etudiant') {
+    //         Auth::guard('etudiant')->logout();
+    //         $request->session()->invalidate();     // Invalidation de la session
+    //         $request->session()->regenerateToken();
+    //     } elseif ($userType === 'formateur') {
+    //         Auth::guard('formateur')->logout();
+    //         $request->session()->invalidate();     // Invalidation de la session
+    //         $request->session()->regenerateToken();
+    //     }
+
+    //     return redirect('/login');
+    // }
+
+    public function logoutFormateur(Request $request)
     {
-        $userType = $request->user_type;
+        auth()->guard('formateur')->logout();  // Déconnexion du formateur
+        $request->session()->invalidate();     // Invalidation de la session
+        $request->session()->regenerateToken(); // Regénération du token CSRF
 
-        if ($userType === 'etudiant') {
-            Auth::guard('etudiant')->logout();
-        } elseif ($userType === 'formateur') {
-            Auth::guard('formateur')->logout();
-        }
-
-        return redirect('/login');
+        return redirect('/login#formateur');   // Redirection vers la page de connexion
     }
 
    

@@ -71,9 +71,10 @@
 }
 
 .add{
-  padding-top: 1em;
-  padding-top: 1em;
-  width: 8rem;
+  /* padding-top: 1em; */
+  /* padding-top: 1em; */
+  width: 10rem;
+  /* height: 10rem; */
   align-self: flex-end;
 }
 
@@ -159,3 +160,14 @@
   width: 50px;
   margin-left: auto;
 }
+
+/* .sb-nav-fixed{
+  position: fixed;
+} */
+
+/* .count{
+  border: 1px solid whitesmoke;
+  border-radius: 100px;
+  background-color: dimgrey;
+} */
+
