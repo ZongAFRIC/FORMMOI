@@ -47,7 +47,7 @@
   overflow-x: auto;
   text-align: center;
   white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth; /* Optional: Adds smooth scrolling */
 }
 
 .btn-bd-primary {
@@ -161,13 +161,113 @@
   margin-left: auto;
 }
 
-/* .sb-nav-fixed{
-  position: fixed;
+.modePaiementImg{ 
+  display: flex; 
+  justify-content: space-around; 
+  flex-wrap: wrap; 
+  margin-top: 20px; 
+} 
+.button { 
+  text-align: center; 
+  margin: 10px; 
+  border: 2px solid #ccc; 
+  border-radius: 15px; 
+  padding: 5px;  
+  width: 120px; 
+  transition: transform 0.3s, box-shadow 0.3s; 
+} 
+.button img { 
+  width: 100px; 
+  height: 75px; 
+  border-radius: 50%; 
+  margin-bottom: 10px; 
+} 
+.button:hover { 
+  transform: scale(1.1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+} 
+.button-title { 
+  font-size: 16px; 
+  font-weight: bold; 
+  color: #333; 
+}
+
+.stars .fa { 
+  cursor: pointer; 
+  font-size: 1.5em; 
+  color: #ddd; 
+} 
+  
+.stars .fa.selected { 
+  color: #00ff0d; 
+}
+
+
+/* Conteneur des étoiles */
+.rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Masquer les boutons radio */
+.rating input[type="radio"] {
+    display: none;
+}
+
+/* Style des étoiles */
+.rating label.star {
+    font-size: 2rem;
+    color: lightgray;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+/* Couleur des étoiles sélectionnées */
+.rating input[type="radio"]:checked ~ label.star,
+.rating label.star:hover,
+.rating label.star:hover ~ label.star {
+    color: gold;
+}
+
+/* Style centré pour le formulaire */
+.text-center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* .recherche{
+  border: blue outset 1.5px;
+  border-radius: 10%;
 } */
 
-/* .count{
-  border: 1px solid whitesmoke;
-  border-radius: 100px;
-  background-color: dimgrey;
-} */
 
+
+.scroll-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.scroll-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.scroll-row > * {
+  flex: 0 0 auto;
+}
+
+
+.modal-dialog-end {
+  position: absolute;
+  right: 0;
+  margin: 0;
+  max-width: 400px;
+  height: 100%;
+}
+
+.modal-content {
+  height: 100%;
+}

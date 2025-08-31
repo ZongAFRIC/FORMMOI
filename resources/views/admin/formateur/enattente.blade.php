@@ -17,34 +17,26 @@
             <i class="fas fa-table me-1"></i> Liste formateurs en attente
         </div>
         <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Telephone</th>
-                        <th>Email</th>
-                        <th>Etat</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (isset($invalidFormateurs) && $invalidFormateurs->count() > 0) 
+                @if (isset($invalidFormateurs) && $invalidFormateurs->count() > 0) 
+
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Telephone</th>
+                                <th>Email</th>
+                                <th>Etat</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         @foreach ($invalidFormateurs as $invalid)
                             <tr>
                                 <td> {{ $invalid->id }} </td>
                                 <td> {{ $invalid->nom }} </td>
-                                {{-- <td> 
-                                    <a href="#">
-                                        <img src="{{ $cat->image ? asset($cat->image) : asset('img/user.webp') }}" 
-                                        alt="Image de la catégorie" 
-                                        class="img-fluid" 
-                                        width="30"
-                                        data-bs-toggle="modal" data-bs-target="#imageModal">
-                                    </a>
-                                </td> --}}
                                 <td> {{ $invalid->prenom }} </td>
                                 <td> {{ $invalid->telephone }} </td>
                                 <td> {{ $invalid->email }} </td>
@@ -62,38 +54,22 @@
                                         
                                 <td class="text-center">
                                     <div class="row justify-content-center">
-                                        <div class="col-auto">
-                                            <a href="{{ route('attente.detail',$invalid->id)}}" class="btn btn-success btn-circle btn-sm"><i class="fas fa-arrows-to-eye"></i></a>
+                                        <div class="">
+                                            <a href="{{ route('attente.detail',$invalid->id)}}" class="btn btn-success">Voir</a>
                                         </div>
-                                        <div class="col-auto">
-                                            <a href="{{ route('categorie.edit',$invalid->id)}}" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-user-edit"></i></a>
-                                        </div>
-                                        {{-- <div class="col-auto">
-                                            <a href="{{ route('categorie.delete',$invalid->id)}}" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
-                                        </div> --}}
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
-                    @else
+                    
+                </tbody>
+                @else
                         <tr>
                             <td colspan="8">00 formateur en attente dans la base de données.</td>
                         </tr>
-                    @endif
-                            <!-- Modal -->
-            {{-- <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
-                    <img src="{{ $cat->image ? asset($cat->image) : asset('img/user.webp') }}" 
-                        alt="Image agrandie de la catégorie" 
-                        class="img-fluid">
-                    </div>
-                </div>
-                </div>
-            </div> --}}
-                </tbody>
+                @endif
             </table>
+
         </div>
     </div>
 </div>

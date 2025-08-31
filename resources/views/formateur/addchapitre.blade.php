@@ -63,18 +63,18 @@
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
+                                        {{-- <th>Id</th> --}}
                                         <th>Titre</th>
                                         <th>Description</th>
                                         <th>Video</th>
-                                        <th>Action</th>
+                                        {{-- <th>Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @if (isset($chapitre) && $chapitre->count() > 0) 
                                         @foreach ($chapitre as $chap)
                                             <tr>
-                                                <td> {{ $chap->id }} </td>
+                                                {{-- <td> {{ $chap->id }} </td> --}}
                                                 <td> {{ $chap->titre }} </td>
                                                 <td> {{ $chap->description }} </td>
                                                 <td> 
@@ -83,11 +83,11 @@
                                                     </a>
                                                 </td>
 
-                                                <td class="text-center">
+                                                {{-- <td class="text-center">
                                                     <a  href="{{ route('chapitre.show',$chap->id)}}" class="btn btn-success btn-circle btn-sm"><i class="fas fa-arrows-to-eye"></i></a> 
                                                     <a  href="{{ route('chapitre.edit',$chap->id)}}" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-user-edit"></i></a> 
                                                     <a  href="{{ route('chapitre.delete',$chap->id)}}" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
-                                                </td>
+                                                </td> --}}
                                             </tr>
 
                                             <!-- Modal pour chaque vidéo -->

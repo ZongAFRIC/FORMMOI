@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('paiements', function (Blueprint $table) {
             $table->id();
             $table->double('montant');
-            $table->date('date');
+            $table->timestamp('date');
             $table->string('methode');
             $table->enum('status', ['validé', 'annulé']);
-            $table->unsignedBigInteger('formation_id')->nullable(); // Permet NULL
-            $table->unsignedBigInteger('commande_id')->nullable();  // Permet NULL
-            $table->unsignedBigInteger('etudiant_id');
+            $table->unsignedBigInteger('formation_id')->nullable();
+            // $table->unsignedBigInteger('commande_id')->nullable();
+            $table->unsignedBigInteger('etudiant_id')->nullable();
             $table->timestamps();
 
             $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
-            $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade');
+            // $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade');
             $table->foreign('etudiant_id')->references('id')->on('etudiants')->onDelete('cascade');
         });
     }

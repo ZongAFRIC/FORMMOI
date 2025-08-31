@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('avis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('etudiant_id');
-            $table->foreign('etudiant_id')->references('id')->on('etudiants')->onDelete('cascade');
-            
-            // Clé étrangère pour 'formation_id' pointant sur la table 'formations'
-            $table->unsignedBigInteger('formation_id');
-            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
-    
+            $table->integer('note')->nullable();
+            $table->text('commentaire')->nullable();
+            $table->enum('type', ['Note', 'Commentaire']); // Type d'avis (Note ou Commentaire)
+            $table->unsignedBigInteger('chapitre_id'); 
+            $table->unsignedBigInteger('utilisateur_id'); // L'utilisateur qui a donné l'avis (étudiant ou formateur)
+            $table->enum('type_utilisateur', ['etudiant', 'formateur']);
             $table->timestamps();
+
+            // Clés étrangères
+            $table->foreign('chapitre_id')->references('id')->on('chapitres')->onDelete('cascade');
+            // $table->foreign('utilisateur_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

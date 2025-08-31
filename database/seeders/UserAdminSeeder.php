@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class UserAdminSeeder extends Seeder
 {
@@ -19,24 +20,24 @@ class UserAdminSeeder extends Seeder
             [
                 'nom' => 'Admin',
                 'prenom' => 'Super',
-                'email' => 'admin@example.com',
+                'email' => 'admin1@example.com',
                 'image' => null,
                 'role' => 'admin',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'), // Assure-toi de chiffrer le mot de passe
-                'remember_token' => \Str::random(10),
+                'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
                 'nom' => 'User',
                 'prenom' => 'Test',
-                'email' => 'user@example.com',
+                'email' => 'user1@example.com',
                 'image' => null,
                 'role' => 'user',
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
-                'remember_token' => \Str::random(10),
+                'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

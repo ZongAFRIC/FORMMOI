@@ -27,7 +27,7 @@
     @endif
 
     <!-- Formulaire de Paiement -->
-    <form action="{{ route('etudiant.payer') }}" method="POST">
+    <form action="{{ route('formation.achat', ['formation_id' => $formation->id]) }}" method="POST">
         @csrf
 
         @if (isset($formation))

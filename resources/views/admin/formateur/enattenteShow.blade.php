@@ -22,37 +22,40 @@
                             <td colspan="2">Nom  :</td>
                             <td>{{ $invalidFormateur->nom}}</td>
                           </tr>
-
                           <tr>
                             <td colspan="2">Prenom  :</td>
                             <td>{{ $invalidFormateur->prenom}}</td>
                           </tr>
-
                           <tr>
                             <td colspan="2">Email  :</td>
                             <td>{{ $invalidFormateur->email}}</td>
                           </tr>
-
-                          {{-- <tr>
-                            <td colspan="2">Image :</td>
-                            <td> <img src="{{ $invalidFormateur->image ? asset($invalidFormateur->image) : asset('img/user.webp') }}" 
-                                alt="Image de la catégorie" 
-                                class="img-fluid" 
-                                width="70"
-                                >
-                            </td>
-                          </tr> --}}
-
+                          
                           <tr>
                             <td colspan="2">Attestation :</td>
-                            <td> {{ $invalidFormateur->attestation}} </td>
+                            <td> 
+                              @if($invalidFormateur->attestation)
+                                  <a href="{{ asset('storage/' . $invalidFormateur->attestation) }}" target="_blank" class="btn btn-primary">
+                                      Télécharger l'attestation
+                                  </a>
+                              @else
+                                  <span class="text-muted">Aucune  attestation</span>
+                              @endif
+                            </td>
                           </tr>
-
                           <tr>
                             <td colspan="2">Cv :</td>
-                            <td> {{ $invalidFormateur->cv}} </td>
-                          </tr>
+                            <td> 
+                              @if($invalidFormateur->cv)
+                                  <a href="{{ asset('storage/' . $invalidFormateur->cv) }}" target="_blank" class="btn btn-primary">
+                                      Télécharger le Cv
+                                  </a>
+                              @else
+                                  <span class="text-muted">Aucun  Cv</span>
+                              @endif
+                            </td>
 
+                          </tr>
                           <tr>
                             <td colspan="2">Bio :</td>
                             <td> {{ $invalidFormateur->bio}} </td>
@@ -70,9 +73,9 @@
                     </form>
                 </div>
 
-                <a href="mailto"></a>
+                {{-- <a href="mailto"></a> --}}
 
-                <a href=" {{ route('categotie.retour')}}" class="btn btn-warning"> Annuler</a>
+                {{-- <a href=" {{ route('categotie.retour')}}" class="btn btn-warning"> Annuler</a> --}}
             
             </div>
         </div>

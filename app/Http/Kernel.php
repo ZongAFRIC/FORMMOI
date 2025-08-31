@@ -26,6 +26,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'formateur' => \App\Http\Middleware\FormateursMiddleware::class,
         'etudiant' => \App\Http\Middleware\EtudiantMiddleware::class,
+        'auth:etudiant,formateur' => \App\Http\Middleware\EtudiantFormateurMiddleware::class,
         'user-acces' => \App\Http\Middleware\AccesUser::class,
     ];
 

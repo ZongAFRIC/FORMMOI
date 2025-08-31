@@ -19,7 +19,7 @@ class Commande extends Model
 
     public function formateur()
     {
-        return $this->belongsTo(Formateur::class, 'etudiant_id'); // On réutilise `etudiant_id` pour la clé étrangère
+        return $this->belongsTo(Formateur::class, 'formateur_id'); // On réutilise `etudiant_id` pour la clé étrangère
     }
 
     // public function formations()

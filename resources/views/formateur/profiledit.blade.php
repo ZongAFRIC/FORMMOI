@@ -2,7 +2,7 @@
 @section('content')
 
         <ol class="breadcrumb breadcrumb-chevron bg-body-tertiary rounded-3 mb-2">
-            <li class="breadcrumb-item fs-5"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item fs-5"><a href=" {{ route('formateur.dashboard') }} ">Dashboard</a></li>
             <li class="breadcrumb-item fs-5 ">Mon profil</li>
             <li class="breadcrumb-item fs-5 active">Modifier mon profil</li>
         </ol>
@@ -55,24 +55,6 @@
                                         </div>
                                       </div>
                                   </div>
-
-                                  {{-- <div class="form-group row">
-                                    <div class="form-group row">
-                                        <label for="" class="col-sm-2 col-form-label">Mot de passe</label>
-                                        <div class="col-sm-10">
-                                          <input type="password" class="form-control form-control-lg" id="monInput" value=" {{ auth()->guard('formateur')->user()->password }}" name="password">
-                                        </div>
-                                      </div>
-                                  </div>
-
-                                  <div class="form-group row">
-                                    <div class="form-group row">
-                                        <label for="" class="col-sm-2 col-form-label">Confirmation mot de passe</label>
-                                        <div class="col-sm-10">
-                                          <input type="password" class="form-control form-control-lg" id="monInput" value=" {{ auth()->guard('formateur')->user()->image ? asset('storage/' . auth()->guard('formateur')->user()->image) : asset('img/user-removebg-preview.png') }}" name="password_confirmation">
-                                        </div>
-                                      </div>
-                                  </div> --}}
 
                                   <div class="form-group row">
                                     <div class="form-group row">

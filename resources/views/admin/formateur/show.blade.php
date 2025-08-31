@@ -12,25 +12,30 @@
 </div>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-12">
+        <div class="col-lg-8">
             <div class="card shadow-lg border-0 rounded-lg mt-2">
                 <div class="card-header"><h2 class="text-center fs-4 my-4">Information du demandeur</h2></div>
                 <div class="card-body">
                     <table class="table table-bordered table-hover">
                         <tbody>
                           <tr>
-                            <td colspan="2">Nom  :</td>
+                            <td colspan="2">Nom  </td>
                             <td>{{ $validFormateur->nom}}</td>
                           </tr>
 
                           <tr>
-                            <td colspan="2">Prenom  :</td>
+                            <td colspan="2">Prenom  </td>
                             <td>{{ $validFormateur->prenom}}</td>
                           </tr>
 
                           <tr>
-                            <td colspan="2">Email  :</td>
+                            <td colspan="2">Email  </td>
                             <td>{{ $validFormateur->email}}</td>
+                          </tr>
+
+                          <tr>
+                            <td colspan="2">Telephone  </td>
+                            <td>{{ $validFormateur->telephone }}</td>
                           </tr>
 
                           {{-- <tr>
@@ -44,17 +49,25 @@
                           </tr> --}}
 
                           <tr>
-                            <td colspan="2">Attestation :</td>
-                            <td> {{ $validFormateur->attestation}} </td>
+                            <td colspan="2">Attestation </td>
+                            <td> 
+                              <a href="{{ asset('storage/formateurs/attestations/' . $validFormateur->attestation) }}" target="_blank" class="btn btn-primary">
+                                Télécharger l'attestation
+                              </a>
+                            </td>
                           </tr>
 
                           <tr>
-                            <td colspan="2">Cv :</td>
-                            <td> {{ $validFormateur->cv}} </td>
+                            <td colspan="2">Cv </td>
+                            <td>
+                              <a href="{{ asset('storage/formateurs/attestations/' . $validFormateur->attestation) }}" target="_blank" class="btn btn-primary">
+                                Télécharger le Cv
+                              </a>
+                            </td>
                           </tr>
 
                           <tr>
-                            <td colspan="2">Bio :</td>
+                            <td colspan="2">Bio </td>
                             <td> {{ $validFormateur->bio}} </td>
                           </tr>
                         </tbody>
@@ -70,10 +83,13 @@
                     </form> --}}
                 </div>
 
-                <a href="mailto"></a>
-
-                <a href=" {{ route('categotie.retour')}}" class="btn btn-warning"> Annuler</a>
-            
+                <a href="mailto:{{ $valid->mail }}"> Envoyer un mail </a>
+                <div class="card-footer text-center mt-4">
+                    <form action="{{ route('admin.validerFormateur', $validFormateur->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-success">Valider le formateur</button>
+                    </form>
+                    <a href="{{ route('admin.gestFormateurs') }}" class="btn btn-secondary">Retour à la liste</a>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-@extends('layout.appEtudiant')
+@extends($layout)
 @section('content')
 
 <div class="container mt-4">

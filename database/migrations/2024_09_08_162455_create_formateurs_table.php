@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('telephone');
+            $table->decimal('solde',10, 2)->default(0);
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image')->nullable();

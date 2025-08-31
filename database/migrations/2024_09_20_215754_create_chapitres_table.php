@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('formation_id'); // Clé étrangère vers formation
-            $table->string('video')->nullable(); // Chemin vers la vidéo
+            $table->unsignedBigInteger('formation_id');
+            $table->string('video')->nullable();
             $table->timestamps();
 
             $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
@@ -29,5 +29,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('chapitres');
+        Schema::dropIfExists('chapitres', function (Blueprint $table) {
+            $table->dropForeign(['chapitre_id']);
+        });
     }
 };

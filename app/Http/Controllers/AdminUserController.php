@@ -9,6 +9,8 @@ use App\Models\Formateur;
 use App\Models\Formation;
 use App\Models\Etudiant;
 use App\Models\Categorie;
+use App\Models\Message;
+use App\Models\SystemeCaise;
 use App\Notifications\FormateurValidated;
 
 
@@ -32,9 +34,21 @@ class AdminUserController extends Controller
         $validFormateursCount = $validFormateurs->count();
         $formationsCount = Formation::count();
         $etudiantsCount = Etudiant::count();
+        $messagesCount = Message::count();
         $categoriesCount = Categorie::count();
+        $systemeAccount = SystemeCaise::all();
+        $totalCaisse = SystemeCaise::sum('montant');
 
-        return view('admin.dashboard', compact('invalidFormateursCount','validFormateursCount','formationsCount','etudiantsCount','categoriesCount'));
+        return view('admin.dashboard', compact(
+            'invalidFormateursCount',
+            'validFormateursCount',
+            'formationsCount',
+            'etudiantsCount',
+            'categoriesCount',
+            'messagesCount',
+            'systemeAccount',
+            'totalCaisse'
+        ));
     }
 
     /**
@@ -129,4 +143,82 @@ class AdminUserController extends Controller
 
         return redirect()->route('admin.gestFormateurAttente')->with('success', 'Le formateur est validé.');
     }
+
+    public function gestEtudiant()
+    {
+        $etudiants = Etudiant::all();
+
+        return view('admin.etudiant.index', compact('etudiants'));
+    }
+
+    public function gestEtudiantShow($id)
+    {
+        $etudiant = Etudiant::findOrFail($id);
+
+        return view('admin.etudiant.show',compact('etudiant'));
+    }
+
+    public function activer($id)
+    {
+        $etudiant = Etudiant::findOrFail($id);
+        $etudiant->status = "active";
+        $etudiant->save();
+
+        return redirect()->back()->with('success', 'etudiant activé avec succès !');
+    }
+
+    public function desactiver($id)
+    {
+        $etudiant = Etudiant::findOrFail($id);
+        $etudiant->status = "desactive";
+        $etudiant->save();
+
+        return redirect()->back()->with('success', 'etudiant désactivé avec succès !');
+    }
+
+    public function actifshow(string $id)
+    {
+        $validFormateur = Formateur::where('id', $id)->where('is_validated', true)->first();
+        return view('admin.formateur.actifShow', compact('validFormateur'));
+    }
+
+    public function activerformateur($id)
+    {
+        $formateur = Formateur::findOrFail($id);
+        $formateur->status = "active";
+        $formateur->save();
+
+        return redirect()->back()->with('success', 'formateur activé avec succès !');
+    }
+
+    public function desactiverformateur($id)
+    {
+        $formateur = formateur::findOrFail($id);
+        $formateur->status = "desactive";
+        $formateur->save();
+
+        return redirect()->back()->with('success', 'formateur désactivé avec succès !');
+    }
+
+    public function gestFormation()
+    {
+        $formations = Formation::all();
+
+        return view('admin.formation.index', compact('formations'));
+    }
+
+    public function updatePourcentage(Request $request, string $id)
+    {
+        $request->validate([
+            'pourcentage' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $formateur = Formateur::findOrFail($id);
+        $formateur->pourcentage = $request->input('pourcentage');
+        $formateur->save();
+
+        return redirect()->back()->with('success', 'Le pourcentage a été mis à jour avec succès.');
+    }
+
+    
 }

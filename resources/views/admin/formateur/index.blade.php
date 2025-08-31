@@ -15,73 +15,131 @@
             <i class="fas fa-table me-1"></i> Liste formateurs actifs
         </div>
         <div class="card-body">
-            <table id="datatablesSimple">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Telephone</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (isset($validFormateurs) && $validFormateurs->count() > 0) 
-                        @foreach ($validFormateurs as $valid)
-                            <tr>
-                                <td> {{ $valid->id }} </td>
-                                <td> {{ $valid->nom }} </td>
-                                {{-- <td> 
-                                    <a href="#">
-                                        <img src="{{ $cat->image ? asset($cat->image) : asset('img/user.webp') }}" 
-                                        alt="Image de la catégorie" 
-                                        class="img-fluid" 
-                                        width="30"
-                                        data-bs-toggle="modal" data-bs-target="#imageModal">
-                                    </a>
-                                </td> --}}
-                                <td> {{ $valid->prenom }} </td>
-                                <td> {{ $valid->telephone }} </td>
-                                <td> {{ $valid->email }} </td>
-                                <td> {{ $valid->status }} </td>
-                                        
-                                <td class="text-center">
-                                    <div class="row justify-content-center">
-                                        <div class="col-auto">
-                                            <a href="{{ route('categorie.detail',$valid->id)}}" class="btn btn-success btn-circle btn-sm"><i class="fas fa-arrows-to-eye"></i></a>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="{{ route('categorie.edit',$valid->id)}}" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-user-edit"></i></a>
-                                        </div>
-                                        <div class="col-auto">
-                                            <a href="{{ route('categorie.delete',$valid->id)}}" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
+            @if (isset($validFormateurs) && $validFormateurs->count() > 0) 
+                 <table id="datatablesSimple">
+                    <thead>
                         <tr>
-                            <td colspan="4">00 categorie dans la base de données.</td>
+                            {{-- <th>Id</th> --}}
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Telephone</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Pourcentage (%)</th>
+                            <th>Actions</th>
                         </tr>
-                    @endif
-                            <!-- Modal -->
-            {{-- <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-body">
-                    <img src="{{ $cat->image ? asset($cat->image) : asset('img/user.webp') }}" 
-                        alt="Image agrandie de la catégorie" 
-                        class="img-fluid">
-                    </div>
-                </div>
-                </div>
-            </div> --}}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                            <tbody>
+                                @foreach ($validFormateurs as $valid)
+                                    <tr>
+                                        {{-- <td> {{ $valid->id }} </td> --}}
+                                        <td> {{ $valid->nom }} </td>
+                                        <td> {{ $valid->prenom }} </td>
+                                        <td> {{ $valid->telephone }} </td>
+                                        <td> {{ $valid->email }} </td>
+                                        <td class="align-items-center pb-1">
+                                            @if ($valid->status == "active")
+                                                <span class="btn-warning p-2 mt-1">Active</span>
+                                            @else
+                                                <span class="btn-info p-2 mt-1">Desactive</span>
+                                            @endif
+                                        </td>
+                                         <td> 
+                                            <span class="btn btn-info"> {{ $valid->pourcentage }}</span>     
+                                            <button type="button" 
+                                                        class="btn me-4 ml-4" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#pModal{{ $valid->id }}">
+                                                        <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <div class="modal fade" id="pModal{{ $valid->id }}" tabindex="-1" aria-labelledby="actionModalLabel{{ $valid->id }}" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="pModalLabel{{ $valid->id }}">
+                                                                <i class="bi bi-exclamation-circle text-success me-4"></i> 
+                                                                Modifier le pourcentage
+                                                            </h5>
+                                                            
+                                                            <button type="button" class="btn-close bnt-info" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="{{ route('formateur.updatePourcentage', $valid->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="modal-body">
+                                                                <div class="mb-3">
+                                                                    <label> 
+                                                                        <span>
+                                                                            Formateur: <strong>{{ $valid->nom }} {{ $valid->prenom }}</strong>
+                                                                        </span>
+                                                                    </label>
+                                                                    <br>
+                                                                    <br>
+                                                                    <label for="pourcentage" class="form-label">Pourcentage (%)</label>
+                                                                    <input type="number" class="form-control" id="pourcentage" name="pourcentage" value="{{ $valid->pourcentage }}" min="0" max="100" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="d-flex me-4 ml-4">
+                                                <a href="{{ route('formateur.detail', $valid->id) }}" class="btn btn-primary">Voir</a>
+                                        
+                                                <!-- Bouton pour ouvrir le modal -->
+                                                <button type="button" 
+                                                        class="btn me-4 ml-4 {{ $valid->status === 'active' ? 'btn-danger' : 'btn-success' }}" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#actionModal{{ $valid->id }}">
+                                                    {{ $valid->status === 'active' ? 'Désactiver' : 'Activer' }}
+                                                </button>
+                                            </div>
+                                        </td>                                   
+                                
+                                        <div class="modal fade" id="actionModal{{ $valid->id }}" tabindex="-1" aria-labelledby="actionModalLabel{{ $valid->id }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="actionModalLabel{{ $valid->id }}">
+                                                            <i class="bi bi-exclamation-circle text-danger"></i> 
+                                                            {{ $valid->status === 'active' ? 'Confirmation de désactivation' : 'Confirmation d\'activation' }}
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Êtes-vous sûr de vouloir {{ $valid->status === 'active' ? 'désactiver' : 'activer' }} l'étudiant 
+                                                        <strong>{{ $valid->nom }} {{ $valid->prenom }}</strong> ?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                        <form action="{{ $valid->status === 'active' ? route('formateur.desactivation', $valid->id) : route('formateur.activation', $valid->id) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn {{ $valid->status === 'active' ? 'btn-danger' : 'btn-success' }}">
+                                                                {{ $valid->status === 'active' ? 'Désactiver' : 'Activer' }}
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                            @endforeach
+                            
+                        </tbody>
+                    </table>
+                @else
+                <div class="text-center text-danger">Il y a 00 formateur pour le moment.</div>
+                @endif
+            </div>
     </div>
 </div>
     

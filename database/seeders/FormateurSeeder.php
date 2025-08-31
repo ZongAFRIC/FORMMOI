@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class FormateurSeeder extends Seeder
 {
@@ -25,8 +26,8 @@ class FormateurSeeder extends Seeder
                 'bio' => 'Expert en développement web.',
                 'is_validated' => true,
                 'status' => 'active',
-                'password' => Hash::make('password'), // Assure-toi de chiffrer le mot de passe
-                'remember_token' => \Str::random(10),
+                'password' => Hash::make('password'),
+                'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -42,7 +43,41 @@ class FormateurSeeder extends Seeder
                 'is_validated' => false,
                 'status' => 'desactive',
                 'password' => Hash::make('password'),
-                'remember_token' => \Str::random(10),
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'nom' => 'Moi',
+                'prenom' => 'Me',
+                'telephone' => '75234567',
+                'email' => 'formateur2@educa.com',
+                'image' => null,
+                'cv' => null,
+                'attestation' => null,
+                'bio' => 'Expert en IA.',
+                'is_validated' => true,
+                'status' => 'active',
+                'password' => Hash::make('password1'),
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'nom' => 'FORMA',
+                'prenom' => 'Form',
+                'telephone' => '65934147',
+                'email' => 'formateur1@educa.edu',
+                'image' => null,
+                'cv' => null,
+                'attestation' => null,
+                'bio' => 'Expert en développement web.',
+                'is_validated' => true,
+                'status' => 'active',
+                'password' => Hash::make('password1'),
+                'remember_token' => Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

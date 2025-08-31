@@ -39,6 +39,20 @@ class CategorieSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+
+            [
+                'nom_categorie' => 'Bureautique',
+                'image' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+
+            [
+                'nom_categorie' => 'Helpdesk',
+                'image' => null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

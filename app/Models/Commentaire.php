@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Commentaire extends Model
-{
-    use HasFactory;
-    protected $fillable = ['avis_id', 'commentaire'];
+// class Commentaire extends Model
+// {
+//     use HasFactory;
+//     protected $fillable = ['avis_id', 'commentaire'];
 
-    public function avis()
-    {
-        return $this->belongsTo(Avis::class);
-    }
+//     public function avis()
+//     {
+//         return $this->belongsTo(Avis::class);
+//     }
+// }
+
+class Commentaire extends Avis
+{
+    protected $table = 'avis'; // Même table que Avis
 }

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('formateur_id')->constrained('formateurs')->onDelete('cascade');
             // $table->foreignId('categorie_id')->constrained('categories')->onDelete('cascade');
             // $table->foreignId('formateur_id')->constrained('formateurs')->onDelete('cascade');
+            $table->boolean('published')->default(false);
             $table->timestamps();
         });
     }

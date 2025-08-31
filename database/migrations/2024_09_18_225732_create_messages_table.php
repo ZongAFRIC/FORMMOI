@@ -12,12 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('messages', function (Blueprint $table) {
+            // $table->id();
+            // $table->text('contenu');
+            // $table->unsignedBigInteger('expediteur_id'); // ID de l'expéditeur (étudiant ou formateur)
+            // $table->unsignedBigInteger('recepteur_id'); // ID du destinataire (étudiant ou formateur)
+            // $table->enum('expediteur_type', ['etudiant', 'formateur']);
+            // $table->enum('recepteur_type', ['etudiant', 'formateur']);
+            // $table->boolean('lu')->default(false); // Message lu ou non
+            // $table->timestamps();
+
+            // $table->foreign('expediteur_id')->references('id')->on('etudiants')->onDelete('cascade');
+            // $table->foreign('recepteur_id')->references('id')->on('formateurs')->onDelete('cascade');
+
             $table->id();
-            $table->foreignId('etudiant_id')->constrained('etudiants')->onDelete('cascade');
-            $table->foreignId('formateur_id')->constrained('formateurs')->onDelete('cascade');
-            $table->text('contenu_message');
-            $table->timestamp('date_envoi');
-            $table->timestamp('date_lecture');
+            $table->text('contenu');
+            $table->unsignedBigInteger('expediteur_id');
+            $table->unsignedBigInteger('recepteur_id');
+            $table->enum('expediteur_type', ['etudiant', 'formateur']);
+            $table->enum('recepteur_type', ['etudiant', 'formateur']);
+            $table->boolean('lu')->default(false);
             $table->timestamps();
         });
     }

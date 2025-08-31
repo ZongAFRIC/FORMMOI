@@ -10,12 +10,23 @@ class Message extends Model
     use HasFactory;
 
     protected $fillable = [
-        'etudiant_id',
-        'formateur_id',
-        'contenu_message',
-        'date_envoi',
-        'date_lecture'
+        'contenu',
+        'expediteur_id',
+        'recepteur_id',
+        'expediteur_type',
+        'recepteur_type',
+        'lu'
     ];
+
+    public function expediteur()
+    {
+        return $this->morphTo();
+    }
+
+    public function recepteur()
+    {
+        return $this->morphTo();
+    }
 
     public function etudiant()
     {

@@ -34,6 +34,7 @@
                                 <div class="col-md-6">
                                     <label for="categorie">Catégorie</label>
                                     <select class="form-control form-control-lg @error('categorie') is-invalid @enderror" name="categorie" required>
+                                        <option value="">-- Veuillez choisir une categorie --</option>
                                         @if (isset($categorie))
                                             @foreach ($categorie as $cat)
                                                 <option> {{ $cat->nom_categorie }} </option>
@@ -50,7 +51,7 @@
                             <div class="row mb-3">
                                 <div class="col-md-12">
                                     <label for="description">Description </label>
-                                    <textarea class="form-control form-control-lg" name="description" id="description" required></textarea>
+                                    <textarea class="form-control " name="description" id="description" required></textarea>
                                 </div>
                             </div>
         
@@ -64,7 +65,7 @@
 
                                 <div class="col-md-6">
                                     <label for="duree">Durée (en heures)</label>
-                                    <input type="number" class="form-control form-control-lg" name="duree" id="duree" required>
+                                    <input type="number" class="form-control form-control-lg" name="duree" id="duree" min="1" required>
                                 </div>
                             </div>
         
@@ -90,84 +91,7 @@
                                 </div>
                                 
                             </div>
-        {{-- <div >
-            <hr>
-            <div class="card mb-1"></div>
-              <h4>Chapitres</h4>
-            <hr>
-        </div> --}}
         
-        <!-- Section des chapitres -->
-                            
-            {{-- <div class="row mb-3">
-                <div class="col-md-12">
-                    <div id="chapitres-section">
-                         <div class="row chapitre">
-
-                            <!-- Titre du chapitre -->
-                            <div class="col-md-4">
-                                <label for="chapitre_titre[]">Titre du chapitre</label>
-                                <input type="text" class="form-control form-control-lg" name="titre[]" required>
-                            </div>
-        
-                            <!-- Description du chapitre -->
-                            <div class="col-md-4">
-                                <label for="chapitre_description[]">Description</label>
-                                <textarea class="form-control form-control-lg" name="description[]" required></textarea>
-                            </div>
-        
-                            <!-- Vidéo du chapitre -->
-                            <div class="col-md-4">
-                                <label for="chapitre_video[]">Vidéo du chapitre</label>
-                                <input type="file" class="form-control form-control-lg" name="video[]" accept="video/*" required>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            
-            <!-- Bouton pour ajouter des chapitres -->
-                {{-- <div class="row mb-3">
-                   <div class="col-md-12">
-                        <button type="button" class="btn btn-secondary fs-5" id="add-chapitre">Ajouter un autre chapitre</button>
-                    </div>
-                </div> --}}
-        
-                            <!-- Bouton de soumission -->
-                            
-
-                            {{-- <script>
-                                let chapitreCount = 2;
-                    
-                                // Ajout dynamique des chapitres
-                                document.getElementById('add-chapitre').addEventListener('click', function() {
-                                    const chapitresSection = document.getElementById('chapitres-section');
-                                    const newChapitre = document.createElement('div');
-                                    newChapitre.classList.add('row', 'chapitre', 'mb-3');
-                    
-                                    // Insertion du numéro du chapitre dans le HTML
-                                    newChapitre.innerHTML = `
-                                        <h5>Chapitre ${chapitreCount}</h5>
-                                        <div class="col-md-4">
-                                            <label for="chapitre_titre[]">Titre du chapitre</label>
-                                            <input type="text" class="form-control form-control-lg" name="titre[]" required>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="chapitre_description[]">Description</label>
-                                            <textarea class="form-control form-control-lg" name="description[]" required></textarea>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="chapitre_video[]">Vidéo du chapitre</label>
-                                            <input type="file" class="form-control form-control-lg" name="video[]" accept="video/*" required>
-                                        </div>
-                                    `;
-                            
-                                    chapitresSection.appendChild(newChapitre);
-                    
-                                    chapitreCount++;
-                                });
-                            </script> --}}
-
                             <div class="d-grid mb-3">
                                 <button type="submit" class="btn btn-primary btn-block fs-4">Créer la formation</button>
                             </div>

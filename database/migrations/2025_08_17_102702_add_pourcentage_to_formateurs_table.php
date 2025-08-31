@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('commentaires', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('avis_id')->constrained()->onDelete('cascade');
-            $table->string('commentaire');
-            $table->timestamps();
+        Schema::table('formateurs', function (Blueprint $table) {
+            $table->double('pourcentage')->default(5);
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('commentaires');
+        Schema::table('formateurs', function (Blueprint $table) {
+            //
+        });
     }
 };

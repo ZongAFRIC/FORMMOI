@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Categorie;
 use App\Models\Formation;
 
@@ -31,50 +32,30 @@ class CategorieController extends Controller
      */
      public function store(Request $request)
     {
-    //     // Categorie::create($request->all());
-    //     $request->validate([
-    //         'nom_categorie' => 'required|string|max:255',
-    //         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-    //     ]);
-    
-    //     $categorie = new Categorie();
-    //     $categorie->nom_categorie = $request->nom_categorie;
-    
-    //     if ($request->hasFile('image')) {
-    //         // Stocke l'image dans storage/app/public/categories
-    //         $path = $request->file('image')->store('categories', 'public');
-    //         $categorie->image = $path;
-    //     }
-    
-    //     $categorie->save();
-    //     return redirect()->route('gestion.categorie')->with('success', 'Categorie ajouté avec succès.');
-    
-    
-
-    $request->validate([
-        'nom_categorie' => 'required|string|max:255',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
-    ]);
-    
-    
-    $image = $request->image;
-    if($image != null && !$image->getError()){
-
-        $file = $request->file('image');
-        $filename = $file->getClientOriginalName();
-        $imagePath = $file->storeAs('categories/image', $filename,'public');
-        $categorie=Categorie::create([
-            'nom_categorie' => $request->nom_categorie,
-            'image'=> $imagePath,
+        $request->validate([
+            'nom_categorie' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
-    }
-    else{
-        $categorie=Categorie::create([
-            'nom_categorie' => $request->nom_categorie,
-        ]);
-    }
-    
-    return redirect()->route('gestion.categorie')->with('success', 'Categorie ajouté avec succès.');
+        
+        
+        $image = $request->image;
+        if($image != null && !$image->getError()){
+
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $imagePath = $file->storeAs('categories/image', $filename,'public');
+            $categorie=Categorie::create([
+                'nom_categorie' => $request->nom_categorie,
+                'image'=> $imagePath,
+            ]);
+        }
+        else{
+            $categorie=Categorie::create([
+                'nom_categorie' => $request->nom_categorie,
+            ]);
+        }
+        
+        return redirect()->route('gestion.categorie')->with('success', 'Categorie ajouté avec succès.');
     
     }
 
@@ -149,12 +130,57 @@ class CategorieController extends Controller
         return view('categorie.list',compact('categorie'));
     }
 
+    // public function formationsParCategorie($nom_categorie)
+    // {
+    //     $categorie = Categorie::where('nom_categorie', $nom_categorie)->with('formations')->firstOrFail();
+    //     $formationsCount = Categorie::withCount('formations')->get();
+    //     return view('formation.parCategorie', compact('categorie','formationsCount'));
+    // }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('recherche'); // Récupérer la requête de recherche
+
+        // Rechercher les catégories par nom
+        $categories = Categorie::where('nom_categorie', 'LIKE', '%' . Str::lower($query) . '%')
+            ->orWhere('nom_categorie', 'LIKE', '%' . Str::ucfirst($query) . '%')
+            ->withCount('formations')
+            ->get(); // Récupérer tous les résultats sans pagination
+
+        // Ajouter l'URL à chaque catégorie
+        $categories->transform(function ($categorie) {
+            $categorie->url = route('categorie.formations', ['nom_categorie' => $categorie->nom_categorie]);
+            return $categorie;
+        });
+
+        return response()->json($categories);
+    }
+
+    public function categoriesListe()
+    {
+        $categories = Categorie::withCount('formations')->get();
+
+        // Déterminer le  layout selon le type d'utilisateur
+        if (auth()->guard('etudiant')->user()) {
+            $layout = 'layout.appEtudiant';
+        } elseif (auth()->guard('formateur')->user()) {
+            $layout = 'layout.appFormateur';
+        }
+
+        return view('categorie.list', compact('categories', 'layout'));
+    }
+
     public function formationsParCategorie($nom_categorie)
     {
         $categorie = Categorie::where('nom_categorie', $nom_categorie)->with('formations')->firstOrFail();
         $formationsCount = Categorie::withCount('formations')->get();
-        return view('formation.parCategorie', compact('categorie','formationsCount'));
-    }
 
+        if (auth()->guard('etudiant')->user()) {
+            $layout = 'layout.appEtudiant';
+        } elseif (auth()->guard('formateur')->user()) {
+            $layout = 'layout.appFormateur';
+        }
+        return view('formation.parCategorie', compact('categorie','formationsCount', 'layout'));
+    }
 
 }

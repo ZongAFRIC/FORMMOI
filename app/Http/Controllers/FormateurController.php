@@ -9,6 +9,10 @@ use App\Models\Formateur;
 use App\Models\Categorie;
 use App\Models\Etudiant;
 use App\Models\Chapitre;
+use App\Models\Paiement;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FormateurController extends Controller
 {
@@ -18,26 +22,41 @@ class FormateurController extends Controller
     public function index()
     {
         if (auth()->guard('formateur')->check()) {
-            // L'utilisateur est bien authentifié en tant que formateur
             $formateur = auth()->guard('formateur')->user();
             $mesformationCount = $formateur->formations()->count();
         } else {
-            // Redirection vers la page de connexion si l'utilisateur n'est pas authentifié
             return redirect()->route('login')->with('error', 'Veuillez vous connecter en tant que formateur.');
         }
 
         $formationsCount = Formation::count();
+        $mesformations = $formateur->formations;
+
+        // Formations déjà achetées par ce formateur (avec les objets Formation)
+        $formationsAchetees = $formateur->mesformationsAchetees()->get();
+
+        // Liste des IDs des formations achetées pour l'exclusion
+        $formationsAcheteesIds = $formationsAchetees->pluck('id'); // Plutôt que pluck('formations.id')
+
+        // Toutes les formations publiées (sauf celles du formateur connecté et celles achetées)
+        $formationsDispo = Formation::where('published', true)
+            ->where('formateur_id', '!=', $formateur->id)
+            ->whereNotIn('id', $formationsAcheteesIds)
+            ->get();
 
         if (!$formateur) {
             return redirect()->route('login')->with('error', 'Veuillez vous connecter pour voir vos formations.');
         }
-
-        return view('formateur.dashboard', compact('formationsCount','mesformationCount','formationsCount'));
+        $mesCours = $formateur->mesformationsAchetees()->get();
+        $mesCoursCount = $mesCours->count();
+        return view('formateur.dashboard', compact(
+            'mesformationCount',
+            'formationsCount',
+            'formateur',
+            'formationsDispo',
+            'mesCoursCount'
+        ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function mesFormations()
     {
         $formateur = auth()->guard('formateur')->user();
@@ -45,46 +64,6 @@ class FormateurController extends Controller
         // $formation = Formation::with('chapitres')->findOrFail($id);
         // $nombreChapitres = $formation->chapitres->count();
         return view('formateur.mesformations', compact('mesformations'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function attente()
@@ -151,6 +130,63 @@ class FormateurController extends Controller
 
         return redirect()->route('monprofil')->with('success', 'Profil mis à jour avec succès.');
 
+    }
+
+    public function Achat($formation_id){
+
+        $formation = Formation::findOrFail($formation_id);
+        return view('formateur.achat', compact('formation'));
+    }
+
+
+    public function mesCours()
+    {
+        // dd(session()->all());
+        $formateur = auth('formateur')->user();
+        $nom = $formateur->nom;
+        
+        // dd($nom);
+        // Formations achetées
+        $mesFormations = $formateur->mesformationsAchetees()->get();
+        $mesformationCount = $mesFormations->count();
+        // dd($mesformationCount);
+        return view('formateur.listecours', compact('mesFormations'));
+    }
+
+
+    public function caisse()
+    {
+        $formateur = auth('formateur')->user();
+
+        // Log::info('Formateur: ' . $formateur->nom . ' ' . $formateur->prenom);
+        // dd($formateur->id);
+        // Récupérer les paiements des formations de ce formateur
+        if (!$formateur) {
+            return redirect()->route('login')->with('error', 'Vous devez être connecté.');
+        }
+    
+        $paiements = Paiement::whereHas('formation', function ($query) use ($formateur) {
+            $query->where('formateur_id', $formateur->id);
+            })->with('formation', 'etudiant')->orderBy('date', 'desc')->get();
+        // Log::info('Paiements: ' . $paiements . ' effectués' . $paiements->count());
+        // dd($paiements);
+        return view('formateur.historique', compact('formateur','paiements'));
+    }
+
+    public function searchFormation(Request $request)
+    {
+        $query = $request->input('recherche'); // Récupérer la requête de recherche
+
+        // Rechercher les catégories par nom
+        $formations = Formation::where('titre', 'LIKE', '%' . Str::lower($query) . '%')
+            ->orWhere('titre', 'LIKE', '%' . Str::ucfirst($query) . '%')
+            ->get()
+            ->map(function ($formation) {
+                $formation->url = route('formateur.formations', ['titre' => $formation->titre]);
+                return $formation;
+        });
+
+        return response()->json($formations);
     }
 
 }

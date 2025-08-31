@@ -9,12 +9,21 @@ class Paiement extends Model
 {
     use HasFactory;
 
-   protected $fillable = ['montant', 'date', 'methode', 'status', 'commande_id', 'formation_id', 'etudiant_id'];
+   protected $fillable = [
+        'montant', 
+        'date',
+        'methode', 
+        'status', 
+        // 'commande_id', 
+        'formation_id', 
+        'etudiant_id',
+        'formateur_id'
+    ];
 
-    public function commande()
-    {
-        return $this->belongsTo(Commande::class, 'commande_id');
-    }
+    // public function commande()
+    // {
+    //     return $this->belongsTo(Commande::class, 'commande_id');
+    // }
 
     public function formation()
     {
@@ -24,5 +33,10 @@ class Paiement extends Model
     public function etudiant()
     {
         return $this->belongsTo(Etudiant::class, 'etudiant_id');
+    }
+
+    public function formateur()
+    {
+        return $this->belongsTo(Formateur::class, 'formateur_id');
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('formations', function (Blueprint $table) {
-            $table->boolean('published')->default(false);
+        Schema::table('authors', function (Blueprint $table) {
+            //
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('formations', function (Blueprint $table) {
-            $table->dropColumn('published');
+        Schema::table('authors', function (Blueprint $table) {
+            //
         });
     }
 };
